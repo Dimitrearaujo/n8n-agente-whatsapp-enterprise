@@ -1,0 +1,2663 @@
+﻿{
+  "name": "Agente de IA",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "messages"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        -320
+      ],
+      "id": "your-uuid-here",
+      "name": "Webhook - API Oficial",
+      "webhookId": "your-webhook-id",
+      "credentials": {
+        "whatsAppTriggerApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "WhatsApp OAuth - Pessoal"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "your-webhook-path",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -80,
+        -512
+      ],
+      "id": "your-uuid-here",
+      "name": "Webhook - API Não Oficial",
+      "webhookId": "your-webhook-id"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "your-uuid-here",
+              "name": "api_type",
+              "value": "evolution",
+              "type": "string"
+            },
+            {
+              "id": "your-uuid-here",
+              "name": "wpp_id",
+              "value": "={{ $json.body.data.key.remoteJid }}",
+              "type": "string"
+            },
+            {
+              "id": "your-uuid-here",
+              "name": "phone",
+              "value": "={{ $json.body.data.key.remoteJid.split(\"@\")[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "your-uuid-here",
+              "name": "name",
+              "value": "={{ $json.body.data.pushName }}",
+              "type": "string"
+            },
+            {
+              "id": "your-uuid-here",
+              "name": "event",
+              "value": "={{ $json.body.event }}",
+              "type": "string"
+            },
+            {
+              "id": "your-uuid-here",
+              "name": "message_type",
+              "value": "={{ $json.body.data.messageType }}",
+              "type": "string"
+            },
+            {
+              "id": "your-uuid-here",
+              "name": "message_ts",
+              "value": "={{ $json.body.data.messageTimestamp }}",
+              "type": "number"
+            },
+            {
+              "id": "your-uuid-here",
+              "name": "base64",
+              "value": "={{ $json.body.data.message.base64 ?? '' }}",
+              "type": "string"
+            },
+            {
+              "id": "your-uuid-here",
+              "name": "from_me",
+              "value": "={{ $json.body.data.key.fromMe }}",
+              "type": "boolean"
+            },
+            {
+              "id": "your-uuid-here",
+              "name": "message",
+              "value": "={{ $json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "your-uuid-here",
+              "name": "instance",
+              "value": "={{ $json.body.instance }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        192,
+        -512
+      ],
+      "id": "your-uuid-here",
+      "name": "Dados"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "your-uuid-here",
+              "name": "api_type",
+              "value": "oficial",
+              "type": "string"
+            },
+            {
+              "id": "your-uuid-here",
+              "name": "wpp_id",
+              "value": "={{ $json.contacts[0].wa_id }}",
+              "type": "string"
+            },
+            {
+              "id": "your-uuid-here",
+              "name": "phone",
+              "value": "={{ $json.contacts[0].wa_id }}",
+              "type": "string"
+            },
+            {
+              "id": "your-uuid-here",
+              "name": "name",
+              "value": "={{ $json.contacts[0].profile.name }}",
+              "type": "string"
+            },
+            {
+              "id": "your-uuid-here",
+              "name": "event",
+              "value": "=messages_upsert",
+              "type": "string"
+            },
+            {
+              "id": "your-uuid-here",
+              "name": "message_type",
+              "value": "={{ $json.messages[0].type }}",
+              "type": "string"
+            },
+            {
+              "id": "your-uuid-here",
+              "name": "message_ts",
+              "value": "={{ $json.messages[0].timestamp }}",
+              "type": "number"
+            },
+            {
+              "id": "your-uuid-here",
+              "name": "base64",
+              "value": "=",
+              "type": "string"
+            },
+            {
+              "id": "your-uuid-here",
+              "name": "media_url",
+              "value": "={{ $json.messages[0].audio.url }}",
+              "type": "string"
+            },
+            {
+              "id": "your-uuid-here",
+              "name": "from_me",
+              "value": "=false",
+              "type": "boolean"
+            },
+            {
+              "id": "your-uuid-here",
+              "name": "message",
+              "value": "={{ $json.messages[0].text.body }}",
+              "type": "string"
+            },
+            {
+              "id": "your-uuid-here",
+              "name": "instance",
+              "value": "=",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        192,
+        -320
+      ],
+      "id": "your-uuid-here",
+      "name": "Dados1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        416,
+        -416
+      ],
+      "id": "your-uuid-here",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "your-uuid-here",
+              "leftValue": "={{ $json.event }}",
+              "rightValue": "messages.upsert",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "your-uuid-here",
+              "leftValue": "={{ $json.from_me }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        640,
+        -416
+      ],
+      "id": "your-uuid-here",
+      "name": "EnviadaPorMim"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "your-uuid-here",
+              "leftValue": "={{ $json.from_me }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "your-uuid-here",
+              "leftValue": "={{ $json.phone }}",
+              "rightValue": "556199999999",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
+      "position": [
+        1024,
+        -336
+      ],
+      "id": "your-uuid-here",
+      "name": "Filtro"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "your-uuid-here",
+              "leftValue": "={{ $('Merge').item.json.message }}",
+              "rightValue": "reset123",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1392,
+        -336
+      ],
+      "id": "your-uuid-here",
+      "name": "Reset?"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "leads",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "phone",
+              "keyValue": "={{ $('Merge').item.json.phone }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1920,
+        -464
+      ],
+      "id": "your-uuid-here",
+      "name": "BuscarLead",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase - Hash Beauty"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "your-uuid-here",
+              "leftValue": "={{ $json.created_at }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2256,
+        -464
+      ],
+      "id": "your-uuid-here",
+      "name": "LeadExiste?"
+    },
+    {
+      "parameters": {
+        "tableId": "leads",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "phone",
+              "fieldValue": "={{ $('Merge').item.json.phone }}"
+            },
+            {
+              "fieldId": "name",
+              "fieldValue": "={{ $('Merge').item.json.name }}"
+            },
+            {
+              "fieldId": "message_count",
+              "fieldValue": "1"
+            },
+            {
+              "fieldId": "status",
+              "fieldValue": "novo"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2480,
+        -368
+      ],
+      "id": "your-uuid-here",
+      "name": "CriarLead",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase - Hash Beauty"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "leads",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('BuscarLead').item.json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "last_interaction",
+              "fieldValue": "={{ $now.toISO() }}"
+            },
+            {
+              "fieldId": "message_count",
+              "fieldValue": "={{ $('BuscarLead').item.json.message_count + 1 }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2480,
+        -576
+      ],
+      "id": "your-uuid-here",
+      "name": "AtualizarLead",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase - Hash Beauty"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "deleteTable",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "n8n_chat_histories",
+          "mode": "name"
+        },
+        "deleteCommand": "delete",
+        "where": {
+          "values": [
+            {
+              "column": "session_id",
+              "value": "={{ $('Merge').item.json.phone }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1600,
+        -320
+      ],
+      "id": "your-uuid-here",
+      "name": "DeletarMemoria",
+      "credentials": {
+        "postgres": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Postgres - Pessoal"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Merge').item.json.message_type }}",
+                    "rightValue": "conversation",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "your-uuid-here"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "your-uuid-here",
+                    "leftValue": "={{ $('Merge').item.json.message_type }}",
+                    "rightValue": "text",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "your-uuid-here",
+                    "leftValue": "={{ $('Merge').item.json.message_type }}",
+                    "rightValue": "audioMessage",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "your-uuid-here",
+                    "leftValue": "={{ $('Merge').item.json.message_type }}",
+                    "rightValue": "audio",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        2800,
+        -464
+      ],
+      "id": "your-uuid-here",
+      "name": "TipoMensagem"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "your-uuid-here",
+              "name": "message",
+              "value": "={{ $('Merge').item.json.message }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3136,
+        -656
+      ],
+      "id": "your-uuid-here",
+      "name": "MensagemTexto"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "your-uuid-here",
+              "name": "base64",
+              "value": "={{ $('Merge').item.json.base64 }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3120,
+        -368
+      ],
+      "id": "your-uuid-here",
+      "name": "Base64"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "base64",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        3344,
+        -368
+      ],
+      "id": "your-uuid-here",
+      "name": "ConverterBase64"
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "inputType": "binary",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        3584,
+        -304
+      ],
+      "id": "your-uuid-here",
+      "name": "TranscreverAudio",
+      "retryOnFail": true,
+      "maxTries": 5,
+      "credentials": {
+        "googlePalmApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Gemini - Pessoal"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "your-uuid-here",
+              "name": "message",
+              "value": "={{ $json.content.parts[0].text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3792,
+        -304
+      ],
+      "id": "your-uuid-here",
+      "name": "MensagemAudio"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Merge').item.json.media_url }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "whatsAppApi",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        3120,
+        -192
+      ],
+      "id": "your-uuid-here",
+      "name": "BaixarArquivo",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "WhatsApp - Hash Beauty"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "your-uuid-here",
+              "leftValue": "={{ $('BuscarLead').item.json.tags }}",
+              "rightValue": "atendimento_humano",
+              "operator": {
+                "type": "array",
+                "operation": "contains",
+                "rightType": "any"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        4048,
+        -656
+      ],
+      "id": "your-uuid-here",
+      "name": "AtendimentoHumano?"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "messages": {
+          "messageValues": [
+            {
+              "type": "user",
+              "message": "={{ $json.message }}"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryManager",
+      "typeVersion": 1.1,
+      "position": [
+        4352,
+        -848
+      ],
+      "id": "your-uuid-here",
+      "name": "Chat Memory Manager"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Merge').item.json.phone }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        4352,
+        -688
+      ],
+      "id": "your-uuid-here",
+      "name": "MemoriaPostgres",
+      "credentials": {
+        "postgres": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Postgres - Pessoal"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "messages": {
+          "messageValues": [
+            {
+              "type": "ai",
+              "message": "={{ $json.message }}"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryManager",
+      "typeVersion": 1.1,
+      "position": [
+        960,
+        -848
+      ],
+      "id": "your-uuid-here",
+      "name": "Chat Memory Manager1"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Merge').item.json.phone }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        960,
+        -688
+      ],
+      "id": "your-uuid-here",
+      "name": "MemoriaPostgres1",
+      "credentials": {
+        "postgres": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Postgres - Pessoal"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "push",
+        "list": "={{ $('Merge').item.json.phone }}_buffer",
+        "messageData": "={{ $json.message }}",
+        "tail": true
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        4432,
+        -64
+      ],
+      "id": "your-uuid-here",
+      "name": "AddMensagemBuffer",
+      "credentials": {
+        "redis": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Redis - Pessoal"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "messages",
+        "key": "={{ $('Merge').item.json.phone }}_buffer",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        4656,
+        -64
+      ],
+      "id": "your-uuid-here",
+      "name": "BuscarBuffer",
+      "credentials": {
+        "redis": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Redis - Pessoal"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4880,
+        -64
+      ],
+      "id": "your-uuid-here",
+      "name": "Aguardar",
+      "webhookId": "your-webhook-id"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "messages",
+        "key": "={{ $('Merge').item.json.phone }}_buffer",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        4432,
+        160
+      ],
+      "id": "your-uuid-here",
+      "name": "BuscarBuffer1",
+      "credentials": {
+        "redis": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Redis - Pessoal"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "your-uuid-here",
+              "leftValue": "={{ $('BuscarBuffer1').item.json.messages?.last() }}",
+              "rightValue": "={{ $('BuscarBuffer').item.json.messages?.last() }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        4656,
+        160
+      ],
+      "id": "your-uuid-here",
+      "name": "Iguais?"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        4880,
+        320
+      ],
+      "id": "your-uuid-here",
+      "name": "FaçaNada"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "={{ $('Merge').item.json.phone }}_buffer"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        4880,
+        144
+      ],
+      "id": "your-uuid-here",
+      "name": "DeletarBuffer",
+      "credentials": {
+        "redis": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Redis - Pessoal"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "your-uuid-here",
+              "name": "messages",
+              "value": "={{ $json.messages.join('\\n\\n') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        5136,
+        144
+      ],
+      "id": "your-uuid-here",
+      "name": "MensagemFinal"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.messages }}",
+        "options": {
+          "systemMessage": "==== IDENTIDADE ===\n\nVoce e [NOME_DO_AGENTE], assistente virtual da [NOME_DA_EMPRESA].\n[DESCRICAO BREVE DO PAPEL DO AGENTE]\n\n=== CONTEXTO DINAMICO ===\n\nData e hora atual: [EXPRESSAO DE DATA/HORA]\nCliente: [NOME DO CLIENTE]\nTelefone: [TELEFONE DO CLIENTE]\n\n=== CHAIN-OF-THOUGHT ===\n\nAntes de CADA resposta, pense mentalmente (NUNCA mostre ao cliente):\n\n1. Intencao: [LISTAR AS INTENCOES POSSIVEIS DO SEU NEGOCIO]\n2. Informacoes: Tenho todos os dados necessarios? Preciso consultar a base?\n3. Acao imediata: Se tenho os dados, USE a ferramenta AGORA\n4. Validacoes: [LISTAR VALIDACOES RELEVANTES]\n5. Confirmacao: Mostrei resumo? Cliente confirmou?\n\n=== TOM E FORMATACAO ===\n\n- [DEFINIR PERSONALIDADE: simpatica, formal, descontraida...]\n- Use hifen (-) para listas, NUNCA asterisco (*)\n- Linha vazia entre categorias\n- Nome do cliente apenas na primeira mensagem\n- Mensagens curtas: maximo 3 paragrafos\n- [OUTRAS REGRAS DE FORMATACAO DO SEU NEGOCIO]\n\n=== FLUXOS DE ATENDIMENTO ===\n\n[FLUXO 1 — ex: DUVIDAS]:\n1. [PASSO A PASSO]\n\n[FLUXO 2 — ex: AGENDAR]:\n1. [PASSO A PASSO]\n\n[FLUXO 3 — ex: CANCELAR]:\n1. [PASSO A PASSO]\n\n=== REGRAS CRITICAS ===\n\nEXECUCAO DE FERRAMENTAS:\n\n- NUNCA diga \"vou verificar\" sem USAR a ferramenta\n- [OUTRAS REGRAS DE EXECUCAO]\n\nANTI-ALUCINACAO:\n\n- NUNCA invente informacoes\n- Se nao sabe, consulte a base ou diga que vai verificar\n\nCONFIRMACAO OBRIGATORIA:\n\n- SEMPRE mostre resumo antes de executar acoes destrutivas\n\nESCALACAO HUMANA — use APENAS quando:\n\n1. Cliente solicitar explicitamente\n2. [LISTAR CRITERIOS DO SEU NEGOCIO]\n\n=== EXEMPLOS ===\n\nExemplo 1 — [SITUACAO COMUM]:\n\nCliente: \"[MENSAGEM TIPICA]\"\nVoce: \"[RESPOSTA MODELO]\""
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        5760,
+        -384
+      ],
+      "id": "your-uuid-here",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "google/gemini-2.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        5424,
+        -80
+      ],
+      "id": "your-uuid-here",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "OpenRouter - Pessoal"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Merge').item.json.phone }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        5680,
+        -80
+      ],
+      "id": "your-uuid-here",
+      "name": "MemoriaPostgres2",
+      "credentials": {
+        "postgres": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Postgres - Pessoal"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "=Base de conhecimento da Hash Beauty com informações sobre serviços, preços, horários, políticas, localização e FAQ. Use SEMPRE antes de responder perguntas sobre a empresa.",
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "topK": 8,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.3,
+      "position": [
+        5984,
+        -96
+      ],
+      "id": "your-uuid-here",
+      "name": "BaseConhecimento",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase - Hash Beauty"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-embedding-001"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        5984,
+        64
+      ],
+      "id": "your-uuid-here",
+      "name": "Embeddings Google Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Gemini - Pessoal"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "description": "=Transfere atendimento para humano. Use APENAS quando: (1) cliente solicitar, (2) reclamação grave, (3) assunto sensível (saúde/alergia), (4) negociação de preços, (5) situação legal/financeira, (6) tentou 3x e não resolveu. Ao usar, diga: \"Vou transferir para a equipe. Aguarde 10min!\"",
+        "workflowId": {
+          "__rl": true,
+          "value": "1lMVk9BDiql5DhlO",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/1lMVk9BDiql5DhlO",
+          "cachedResultName": "Hash Beauty - Agente de IA - Atendimento Humano"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "motivo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('motivo', ``, 'string') }}",
+            "contexto": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('contexto', ``, 'string') }}",
+            "phone": "={{ $('Merge').item.json.phone }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "motivo",
+              "displayName": "motivo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "contexto",
+              "displayName": "contexto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        6992,
+        -96
+      ],
+      "id": "your-uuid-here",
+      "name": "EscalarHumano"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        6704,
+        -96
+      ],
+      "id": "your-uuid-here",
+      "name": "Calculadora"
+    },
+    {
+      "parameters": {
+        "jsCode": "const texto = ($json.output || '').replace(/\\*\\*/g, '*');\n// Pega a resposta da IA\n\nif (!texto || typeof texto !== 'string') {\n  return [{ json: { message: texto || '', part: 1, total: 1 } }];\n}\n// Se nao veio texto ou nao e string, retorna vazio sem quebrar\n\nconst partes = texto\n  .split(/\\n\\n+/)           // Divide o texto onde tiver 2+ quebras de linha (paragrafos)\n  .map(p => p.trim())       // Remove espacos extras de cada parte\n  .filter(p => p.length > 0); // Remove partes vazias\n\nif (partes.length === 0) {\n  return [{ json: { message: texto, part: 1, total: 1 } }];\n}\n// Se nao encontrou paragrafos, manda o texto inteiro como uma mensagem so\n\nconst total = partes.length;\nreturn partes.map((msg, idx) => ({\n  json: {\n    message: msg,          // O texto desse pedaco\n    part: idx + 1,         // Numero da parte (1, 2, 3...)\n    total: total           // Total de partes\n  }\n}));\n// Transforma cada paragrafo em um item separado do n8n\n// Assim o node seguinte (enviar mensagem) roda uma vez por parte\n// Resultado: a IA manda varias mensagens curtas em vez de um textao\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6496,
+        -464
+      ],
+      "id": "your-uuid-here",
+      "name": "QuebrarMensagens"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        6800,
+        -560
+      ],
+      "id": "your-uuid-here",
+      "name": "Iterar"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Merge').item.json.api_type }}",
+                    "rightValue": "evolution",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "your-uuid-here"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "your-uuid-here",
+                    "leftValue": "={{ $('Merge').item.json.api_type }}",
+                    "rightValue": "oficial",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        7056,
+        -544
+      ],
+      "id": "your-uuid-here",
+      "name": "QualAPI?"
+    },
+    {
+      "parameters": {
+        "resource": "chat-api",
+        "operation": "send-presence",
+        "instanceName": "Hash Beauty",
+        "remoteJid": "={{ $('Merge').item.json.wpp_id }}",
+        "delay": 3000
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        7216,
+        -752
+      ],
+      "id": "your-uuid-here",
+      "name": "Digitando...",
+      "credentials": {
+        "evolutionApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Evolution - Hash Beauty"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "Hash Beauty",
+        "remoteJid": "={{ $('Merge').item.json.wpp_id }}",
+        "messageText": "={{ $('Iterar').item.json.message }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        7408,
+        -752
+      ],
+      "id": "your-uuid-here",
+      "name": "EnviarResposta",
+      "credentials": {
+        "evolutionApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Evolution - Hash Beauty"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 3
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        7616,
+        -528
+      ],
+      "id": "your-uuid-here",
+      "name": "Aguardar1",
+      "webhookId": "your-webhook-id"
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "1093846103808061",
+        "recipientPhoneNumber": "={{ $('Merge').item.json.wpp_id }}",
+        "textBody": "={{ $('Iterar').item.json.message }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        7312,
+        -528
+      ],
+      "id": "your-uuid-here",
+      "name": "EnviarResposta1",
+      "webhookId": "your-webhook-id",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "WhatsApp - Hash Beauty"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "### **COMO USAR ESTE WORKFLOW**\n1. NODES LARANJAS: Substitua as credenciais\n\n2. No Webhook:\n   - Copie a Production URL\n   - Configure na Evolution API\n   - Evento: messages.upsert\n\n3. No AI Agent → Tool \"BaseConhecimento\":\n   - Descrição: ajuste para seu negócio\n\n4. No AI Agent → Tool MCP:\n   - Cole o Webhook Path do workflow MCP\n   - Formato: https://seu-n8n.com/mcp/SEU_PATH\n\n5. No AI Agent → Tool \"EscalarHumano\":\n   - Selecione o workflow \"Escalar Humano\"\n   - Inputs já configurados\n\n6. No System Message:\n   - Personalize para seu negócio\n   - Ajuste nome, empresa, serviços, horários\n\n7. Ative o workflow\n\n\n*Seu agente está pronto! Envie \"Oi\" no WhatsApp.*",
+        "height": 736,
+        "width": 416,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -624,
+        -896
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "### **RECEBE MENSAGENS**\n\n1. API Não Oficial:\n\nEndpoint que a Evolution API chama. Cada mensagem do WhatsApp cai aqui.\n\nProduction URL registrada na Evolution.\n\n2. API Oficial\n\nEndpoint que a WABA chama. Cada mensagem do WhatsApp cai aqui.\n\nWebhook configurado no Meta Developers",
+        "height": 688,
+        "width": 336,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -192,
+        -848
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "### **NORMALIZA INFORMAÇÕES**\nExtrai variáveis do Webhook. Facilita o uso nos próximos nodes.",
+        "height": 480,
+        "width": 416,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        160,
+        -640
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "### **SALVA CONTEXTO DO ATENDIMENTO HUMANO**\nQuando o humano responde ao cliente, a mensagem é salva na memória do PostgreSQL como mensagem da IA.\n\nAssim, se o atendimento voltar para a IA depois, ela terá todo o histórico do que foi conversado com o humano.\n\nGarante continuidade e contexto completo!",
+        "height": 480,
+        "width": 662,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        848,
+        -1040
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "### **ENVIADA POR ATENDENTE HUMANO**\nSe `from_me = true` e `event = messages.upsert` → enviado por atendente humano.",
+        "height": 320,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        592,
+        -560
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "### **FILTRA MENSAGENS**\n\nSó processa se:\n- from_me = false (não é mensagem sua)\n\n\nPara testes: adicione filtro de phone específico.",
+        "height": 384,
+        "width": 448,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        848,
+        -544
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "### **RESETA MEMÓRIA**\nSe mensagem = \"reset123\" → limpa memória.\nÚtil para testes.",
+        "height": 288,
+        "width": 464,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1312,
+        -448
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "### **BUSCA CLIENTE**\nProcura no Supabase se cliente já existe (por phone).\nAlways Output Data: TRUE (retorna vazio se não achar).",
+        "height": 368,
+        "width": 368,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1792,
+        -640
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "### **CLIENTE EXISTE?**\nVerifica se found created_at.\nTRUE → já existe → atualizar\nFALSE → novo → criar",
+        "height": 448,
+        "width": 464,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2176,
+        -640
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "content": "### **SALVA CONTEXTO DO ATENDIMENTO HUMANO**\nQuando o cliente tem a tag \"atendimento_humano\" a mensagem é salva na memória do PostgreSQL como mensagem do usuário.\n\nAssim, se o atendimento voltar para a IA depois, ela terá todo o histórico do que foi conversado com o humano.\n\nGarante continuidade e contexto completo!",
+        "height": 496,
+        "width": 928,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3936,
+        -992
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "content": "### **IDENTIFICA TIPO DE MENSAGEM**\nRegra 0: `message_type = \"conversation\"` → texto\nRegra 1: `message_type = \"audioMessage\"` → áudio\n\nCada tipo segue caminho diferente.",
+        "height": 448,
+        "width": 384,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2656,
+        -640
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
+        "content": "### **MENSAGEM DE TEXTO**\nApenas extrai o campo message.",
+        "height": 256,
+        "width": 864,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3056,
+        -752
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note11"
+    },
+    {
+      "parameters": {
+        "content": "### **TRANSCREVE ÁUDIO**\nExtrai base64 ou URL do áudio.\nGoogle Gemini transcreve.",
+        "height": 480,
+        "width": 1280,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3056,
+        -480
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note12"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "height": 1536,
+        "width": 8496,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -640,
+        -1056
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note13"
+    },
+    {
+      "parameters": {
+        "content": "### **AGENTE DE IA**\nRecebe mensagem agrupada → Pode usar 4 tools disponíveis → Carrega memória do PostgreSQL → Gera resposta inteligente.",
+        "height": 240,
+        "width": 992,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        5344,
+        -480
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note14"
+    },
+    {
+      "parameters": {
+        "content": "### **MODELO DE LINGUAGEM**\nDefine qual o modelo de LLM será utilizado.",
+        "height": 288,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        5344,
+        -224
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note15"
+    },
+    {
+      "parameters": {
+        "content": "### **MEMÓRIA PERSISTENTE**\nSession Key = phone do cliente.\nCarrega histórico automático.\nSalva cada interação.",
+        "height": 288,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        5600,
+        -224
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note16"
+    },
+    {
+      "parameters": {
+        "content": "### **RAG - BUSCA DOCUMENTOS**\nSupabase Vector Store em modo Retrieve.\nIA consulta ANTES de responder sobre informações da empresa.",
+        "height": 432,
+        "width": 480,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        5856,
+        -224
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note17"
+    },
+    {
+      "parameters": {
+        "content": "### **TOOL: MCP**\nConecta o AI Agent ao workflow de ferramentas (MCP).",
+        "height": 288,
+        "width": 256,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        6352,
+        -224
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note18"
+    },
+    {
+      "parameters": {
+        "content": "### **CÁLCULOS**\nIA usa quando precisa fazer contas. Reduz erros de cálculo.",
+        "height": 288,
+        "width": 256,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        6624,
+        -224
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note19"
+    },
+    {
+      "parameters": {
+        "content": "### **TRANSFERE PARA HUMANO**\nWorkflow Tool que chama \"Escalar Humano\".\nIA usa quando necessário.",
+        "height": 288,
+        "width": 256,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        6896,
+        -224
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note20"
+    },
+    {
+      "parameters": {
+        "content": "### **QUEBRA E ENVIA MENSAGENS**\nPROBLEMA: Resposta da IA muito longa fica ruim no WhatsApp\n\nSOLUÇÃO - ENVIO EM PARTES:\n1. Quebra resposta por `\\n\\n` (cada bloco = 1 mensagem)\n2. Loop: processa uma parte por vez\n3. Mostra \"digitando...\" no WhatsApp\n4. Envia a mensagem\n5. Aguarda 3 segundos\n6. Volta para próxima parte até acabar\n\n\nRESULTADO: Cliente recebe 3-5 mensagens curtas\nao invés de 1 mensagem gigante.",
+        "height": 560,
+        "width": 1488,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        6352,
+        -800
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note21"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "height": 144,
+        "width": 176,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        912,
+        -720
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note22"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "width": 160,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1568,
+        -336
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note23"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "width": 160,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1888,
+        -480
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note24"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "width": 160,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2448,
+        -592
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note25"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "width": 160,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2448,
+        -384
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note26"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "width": 176,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        4304,
+        -720
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note27"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "width": 160,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3552,
+        -320
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note28"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "width": 192,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        4384,
+        -80
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note30"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "width": 176,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        5376,
+        -112
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note33"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "width": 176,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        5632,
+        -112
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note34"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "width": 176,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        5936,
+        32
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note35"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "height": 144,
+        "width": 272,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        5968,
+        -128
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note36"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "width": 160,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        7280,
+        -544
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note38"
+    },
+    {
+      "parameters": {
+        "content": "### **SISTEMA DE BUFFER (10 SEGUNDOS)**\n\nPROBLEMA: Cliente digita rápido várias mensagens seguidas\n→ Sem buffer: IA processa cada uma separadamente (confuso)\n\nSOLUÇÃO:\n1. Adiciona mensagem no Redis (lista por cliente)\n2. Aguarda 10 segundos\n3. Busca lista antes e depois de aguardar\n4. Compara: mudou? Ainda digitando. Igual? Terminou!\n5. Se terminou: agrupa tudo com \"\\n\\n\" e processa\n6. Se ainda digitando: aguarda próxima mensagem\n\n\nRESULTADO: IA recebe `Oi\\n\\nQuero\\n\\nAgendar` ao invés de 3 mensagens separadas.\n\n*Resposta única e contextualizada!*",
+        "height": 944,
+        "width": 976,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        4352,
+        -480
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note40"
+    },
+    {
+      "parameters": {
+        "content": "![Alt Text](https://www.hashtagtreinamentos.com/wp-content/uploads/2022/05/Logo-Hashtag-Original-1024x458.png.webp)",
+        "height": 128,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -624,
+        -1040
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note41"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "width": 192,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        4832,
+        128
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note39"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "width": 192,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        4384,
+        144
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note42"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "width": 192,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        4608,
+        -80
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note43"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "width": 160,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        7376,
+        -768
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note44"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "width": 160,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        7184,
+        -768
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note45"
+    },
+    {
+      "parameters": {
+        "endpointUrl": "https://SEU-N8N/mcp/SEU_PATH",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1.2,
+      "position": [
+        6432,
+        -96
+      ],
+      "id": "your-uuid-here",
+      "name": "MCPTools"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "height": 144,
+        "width": 192,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -128,
+        -336
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note29"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "width": 192,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -128,
+        -528
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note31"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook - API Oficial": {
+      "main": [
+        [
+          {
+            "node": "Dados1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook - API Não Oficial": {
+      "main": [
+        [
+          {
+            "node": "Dados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dados1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Dados": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "EnviadaPorMim",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EnviadaPorMim": {
+      "main": [
+        [
+          {
+            "node": "Chat Memory Manager1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Filtro",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtro": {
+      "main": [
+        [
+          {
+            "node": "Reset?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reset?": {
+      "main": [
+        [
+          {
+            "node": "BuscarLead",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "DeletarMemoria",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "BuscarLead": {
+      "main": [
+        [
+          {
+            "node": "LeadExiste?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LeadExiste?": {
+      "main": [
+        [
+          {
+            "node": "AtualizarLead",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "CriarLead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AtualizarLead": {
+      "main": [
+        [
+          {
+            "node": "TipoMensagem",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CriarLead": {
+      "main": [
+        [
+          {
+            "node": "TipoMensagem",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TipoMensagem": {
+      "main": [
+        [
+          {
+            "node": "MensagemTexto",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "MensagemTexto",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Base64",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "BaixarArquivo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Base64": {
+      "main": [
+        [
+          {
+            "node": "ConverterBase64",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ConverterBase64": {
+      "main": [
+        [
+          {
+            "node": "TranscreverAudio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TranscreverAudio": {
+      "main": [
+        [
+          {
+            "node": "MensagemAudio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "BaixarArquivo": {
+      "main": [
+        [
+          {
+            "node": "TranscreverAudio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MensagemTexto": {
+      "main": [
+        [
+          {
+            "node": "AtendimentoHumano?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MensagemAudio": {
+      "main": [
+        [
+          {
+            "node": "AtendimentoHumano?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AtendimentoHumano?": {
+      "main": [
+        [
+          {
+            "node": "Chat Memory Manager",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "AddMensagemBuffer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MemoriaPostgres": {
+      "ai_memory": [
+        [
+          {
+            "node": "Chat Memory Manager",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MemoriaPostgres1": {
+      "ai_memory": [
+        [
+          {
+            "node": "Chat Memory Manager1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AddMensagemBuffer": {
+      "main": [
+        [
+          {
+            "node": "BuscarBuffer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "BuscarBuffer": {
+      "main": [
+        [
+          {
+            "node": "Aguardar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aguardar": {
+      "main": [
+        [
+          {
+            "node": "BuscarBuffer1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "BuscarBuffer1": {
+      "main": [
+        [
+          {
+            "node": "Iguais?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Iguais?": {
+      "main": [
+        [
+          {
+            "node": "DeletarBuffer",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "FaçaNada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DeletarBuffer": {
+      "main": [
+        [
+          {
+            "node": "MensagemFinal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MensagemFinal": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MemoriaPostgres2": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "BaseConhecimento": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini": {
+      "ai_embedding": [
+        [
+          {
+            "node": "BaseConhecimento",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EscalarHumano": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculadora": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "QuebrarMensagens",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "QuebrarMensagens": {
+      "main": [
+        [
+          {
+            "node": "Iterar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Iterar": {
+      "main": [
+        [],
+        [
+          {
+            "node": "QualAPI?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "QualAPI?": {
+      "main": [
+        [
+          {
+            "node": "Digitando...",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "EnviarResposta1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Digitando...": {
+      "main": [
+        [
+          {
+            "node": "EnviarResposta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EnviarResposta": {
+      "main": [
+        [
+          {
+            "node": "Aguardar1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aguardar1": {
+      "main": [
+        [
+          {
+            "node": "Iterar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EnviarResposta1": {
+      "main": [
+        [
+          {
+            "node": "Aguardar1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MCPTools": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "your-uuid-here",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f700aa75bc561cef1322219378ae5cf5181962ce2249f0887c2397be7e1fb1a7"
+  },
+  "id": "YOUR_CREDENTIAL_ID",
+  "tags": []
+}

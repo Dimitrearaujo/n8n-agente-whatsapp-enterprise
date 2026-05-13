@@ -1,0 +1,31 @@
+# Credenciais e segredos
+.env
+.env.local
+*.env
+secrets.json
+credentials.json
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/
+
+# Backups e temporários
+*.zip
+*.bak
+*.tmp
+*.temp
+
+# Node (caso use scripts auxiliares)
+node_modules/

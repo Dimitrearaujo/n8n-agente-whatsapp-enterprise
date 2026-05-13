@@ -1,0 +1,8 @@
+# Normalizar line endings para LF em todos os arquivos de texto
+* text=auto eol=lf
+
+# JSONs tratados como texto
+*.json text eol=lf
+
+# Markdown tratado como texto
+*.md text eol=lf

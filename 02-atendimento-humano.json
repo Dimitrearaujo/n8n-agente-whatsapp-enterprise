@@ -1,0 +1,297 @@
+﻿{
+  "name": "Atendimento Humano",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "motivo"
+            },
+            {
+              "name": "contexto"
+            },
+            {
+              "name": "phone"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        1312,
+        208
+      ],
+      "id": "your-uuid-here",
+      "name": "Executado"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "leads",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "phone",
+              "condition": "eq",
+              "keyValue": "={{ $json.phone }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "tags",
+              "fieldValue": "={{ [\"atendimento_humano\"] }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1552,
+        208
+      ],
+      "id": "your-uuid-here",
+      "name": "AdicionarTags",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase - Hash Beauty"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "Hash Beauty",
+        "remoteJid": "556199999999@whatsapp.net",
+        "messageText": "=*Atendimento Humano Solicitado*\nTelefone: {{ $('Executado').item.json.phone }}\n---\nMotivo: {{ $('Executado').item.json.motivo }}\nContexto: \n{{ $('Executado').item.json.contexto }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1792,
+        384
+      ],
+      "id": "your-uuid-here",
+      "name": "AvisarHumano",
+      "credentials": {
+        "evolutionApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Evolution - Hash Beauty"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "1093846103808061",
+        "recipientPhoneNumber": "556199999999",
+        "textBody": "=*Atendimento Humano Solicitado* \nTelefone: {{ $('Executado').item.json.phone }} \n--- \nMotivo: {{ $('Executado').item.json.motivo }} \nContexto:  \n{{ $('Executado').item.json.contexto }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        1792,
+        208
+      ],
+      "id": "your-uuid-here",
+      "name": "AvisarHumano1",
+      "webhookId": "your-webhook-id",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "WhatsApp - Hash Beauty"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "### **RECEBE CHAMADA DA IA**\nTrigger que aguarda o AI Agent chamar.\n\nInputs: motivo, contexto, phone.",
+        "height": 304,
+        "width": 224,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1248,
+        64
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "### **MARCA LEAD**\nAdiciona tag \"atendimento_humano\" no Supabase.\n\nPróximas mensagens deste cliente NÃO vão para IA.",
+        "height": 352,
+        "width": 224,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1488,
+        16
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "### **NOTIFICA ATENDENTE**\nEnvia WhatsApp para humano com:\n- Telefone do cliente\n- Motivo da escalação\n- Contexto da conversa",
+        "height": 544,
+        "width": 224,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1728,
+        16
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "width": 166,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1760,
+        192
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "width": 166,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        192
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "height": 576,
+        "width": 1168,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        800,
+        0
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "![Alt Text](https://www.hashtagtreinamentos.com/wp-content/uploads/2022/05/Logo-Hashtag-Original-1024x458.png.webp)",
+        "height": 128,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        816,
+        16
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "### **COMO USAR ESTE WORKFLOW**\n1. NODES LARANJAS: Substitua as credenciais\n\n2. Ative o workflow\n\n3. Adicione a tool de subworkflow no workflow principal\n\n\n*Quando IA escalar, você receberá notificação!*",
+        "height": 208,
+        "width": 416,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        816,
+        160
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "width": 166,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1760,
+        368
+      ],
+      "id": "your-uuid-here",
+      "name": "Sticky Note8"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Executado": {
+      "main": [
+        [
+          {
+            "node": "AdicionarTags",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AdicionarTags": {
+      "main": [
+        [
+          {
+            "node": "AvisarHumano",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AvisarHumano1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "your-uuid-here",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f700aa75bc561cef1322219378ae5cf5181962ce2249f0887c2397be7e1fb1a7"
+  },
+  "id": "YOUR_CREDENTIAL_ID",
+  "tags": []
+}
