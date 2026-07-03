@@ -240,7 +240,7 @@ No nó **AI Agent**, edite o `System Message` com:
 
 ---
 
-[← Voltar ao índice](../README.md)
+[← Back to profile](https://github.com/Dimitrearaujo)
 
 ---
 
