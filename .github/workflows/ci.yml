@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate workflow JSON files
+        run: |
+          python -c "
+          import json, sys, pathlib
+
+          files = [
+              '01-agente-ia.json',
+              '02-atendimento-humano.json',
+              '03-mcp-tools.json',
+              '04-rag-pipeline.json',
+          ]
+
+          total_nodes = 0
+          for name in files:
+              path = pathlib.Path(name)
+              if not path.exists():
+                  print(f'{name} nao encontrado')
+                  sys.exit(1)
+              try:
+                  data = json.loads(path.read_text(encoding='utf-8-sig'))
+              except json.JSONDecodeError as e:
+                  print(f'{name}: JSON invalido: {e}')
+                  sys.exit(1)
+              nodes = data.get('nodes', [])
+              total_nodes += len(nodes)
+              print(f'{name}: valido — {len(nodes)} nodes')
+
+          print(f'Total: {len(files)} workflows, {total_nodes} nodes')
+          "
