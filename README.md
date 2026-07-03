@@ -241,3 +241,54 @@ No nó **AI Agent**, edite o `System Message` com:
 ---
 
 [← Voltar ao índice](../README.md)
+
+---
+
+<details>
+<summary>🇺🇸 English</summary>
+
+# 🚀 Enterprise WhatsApp Agent — Production Architecture
+
+> The most complete template in the collection: an AI agent for WhatsApp with **dual API** (Official Meta + Evolution API), lead management, audio transcription, RAG, persistent memory in PostgreSQL, Redis buffer, human escalation and **MCP Tools** integration — production-ready at scale.
+
+## 📌 What this system does
+
+A WhatsApp customer service agent built with real production architecture, covering every scenario of a high-volume operation:
+
+- Receives messages via **two WhatsApp APIs** simultaneously (official Meta + Evolution API)
+- **Manages leads** automatically: create, search, update and delete in Supabase
+- **Transcribes audio** to text before processing
+- **Groups messages** in a time window with Redis (avoids responding message by message)
+- Fetches context from the **knowledge base** via RAG (Supabase + Gemini Embeddings)
+- Maintains **persistent memory** of each conversation in PostgreSQL
+- Detects when to escalate to **human support** and notifies automatically
+- Shows **"typing..."** while processing
+- **Splits long responses** into multiple messages
+- Integrates external tools via **MCP (Model Context Protocol)**
+
+## 🗂️ Included workflows
+
+| File | Function | Nodes |
+|---|---|---|
+| `01-agente-ia.json` | **Core** — complete agent logic | 92 |
+| `02-atendimento-humano.json` | Escalation — notifies human agent and adds tags | 13 |
+| `03-mcp-tools.json` | MCP server with custom tools | 11 |
+| `04-rag-pipeline.json` | Document ingestion pipeline for RAG | 26 |
+
+**Total: 142 nodes**
+
+## 🔧 Integrations
+
+| Service | Use |
+|---|---|
+| **WhatsApp Business API (Meta)** | Official input/output channel |
+| **Evolution API** | Alternative channel (unofficial WhatsApp) |
+| **OpenRouter** | LLM — accesses any model (GPT-4o, Claude, Gemini, etc.) |
+| **Google Gemini Embeddings** | Document vectorization for RAG |
+| **Supabase** | Leads (relational DB) + Vector Store (RAG) |
+| **PostgreSQL** | Persistent conversation memory |
+| **Redis** | Message buffer (time window) |
+| **Google Drive** | Source of documents for RAG |
+| **MCP Protocol** | Customizable external tools |
+
+</details>
